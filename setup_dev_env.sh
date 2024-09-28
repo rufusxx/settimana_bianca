@@ -37,13 +37,13 @@ echo -e "${YELLOW}activate development environment${NC}"
 conda activate ${CONDA_PROJECT_ENV} ;
 echo -e "\n${GREEN}environment activated${NC}\n" ;
 
-echo -e "${YELLOW}install ruby gems${NC}"
-gem install jekyll bundler
-echo -e "\n${GREEN}gems installed${NC}\n" ;
-
 echo -e "${YELLOW}fix ruby location with symlink${NC}"
 ln -s "${CONDA_PREFIX}/bin/ruby" "${CONDA_PREFIX}/share/rubygems/bin/ruby"
 echo -e "\n${GREEN}symlink created${NC}\n" ;
+
+echo -e "${YELLOW}install ruby gems${NC}"
+gem install jekyll bundler
+echo -e "\n${GREEN}gems installed${NC}\n" ;
 
 echo -e "${GREEN}done${NC}\n"
 
