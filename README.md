@@ -1,6 +1,6 @@
-# Fatto a Mano <!-- omit in toc -->
+# Settimana Bianca <!-- omit in toc -->
 
-A website for handmade goodies!
+A website for Rufusxx's skiing holiday.
 
 ## 1. Table of contents
 
