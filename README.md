@@ -37,7 +37,10 @@ Use the terminal for navigating to the repository base directory, then use the [
 
 #### 2.1.1. Manual `conda` environment installation
 
-Otherwise use the following command in your terminal to manually create an environment named `settimana-bianca`.
+> [!NOTE]
+> Skip this section if you use the [setup script](#22-auto-setup-script) (which is strongly suggested).
+
+Use the following command in your terminal to manually create an environment named `settimana-bianca`.
 
 ```
 conda env create -f environment.yml
@@ -72,6 +75,10 @@ These are the steps executed by `setup_dev_env.sh`:
 The last step add a symlink to `settimana-bianca` environment (directly in `conda` folders) for `ruby` to find installed _gems_.
 
 ### 2.3. Select the interpreter
+
+> [!TIP]
+> Selecting the interpreter is a good idea for _VS Code_ users.
+
 If you want _VS Code_ to activate the `conda` environment for you, install the _Python_ extension and the search `select interpreter` from the _command palette_.
 Then select `settimana-bianca` to activate the environment in every _integrated terminal_ you open.
 
@@ -86,7 +93,7 @@ make jekyll-serve
 This command build the website and spins up a local server.
 
 > [!WARNING]
-> `jekyll serve` (the command used by `make jekyll-serve`) is suitable for development.
+> `jekyll serve` (the command used by `make jekyll-serve`) is suitable for development.  
 > _Github Pages_ will use a server suitable for a production environment.
 
 If you want to build the website, without running a server, use `make` as shown below.
