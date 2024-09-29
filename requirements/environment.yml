@@ -3,4 +3,5 @@ channels:
   - conda-forge
 dependencies:
   - compilers
+  - python # For VSCode to use 'activate interpreter'
   - ruby
