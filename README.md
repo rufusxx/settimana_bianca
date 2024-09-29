@@ -1,6 +1,6 @@
 # Settimana Bianca <!-- omit in toc -->
 
-A website for Rufusxx's skiing holiday.
+A website for rufusxx's skiing holiday.
 
 ## 1. Table of contents
 
