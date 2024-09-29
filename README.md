@@ -7,13 +7,11 @@ A website for Rufusxx's skiing holiday.
 - [1. Table of contents](#1-table-of-contents)
 - [2. Development environment setup](#2-development-environment-setup)
   - [2.1. Miniconda](#21-miniconda)
-  - [2.2. Environment variables](#22-environment-variables)
-    - [2.2.1. General](#221-general)
-  - [2.3. Build and run the website](#23-build-and-run-the-website)
-- [3. Additional installations before contributing](#3-additional-installations-before-contributing)
-  - [3.1. Pre-commit hooks](#31-pre-commit-hooks)
-  - [3.2. Commitizen](#32-commitizen)
-- [4. Release strategy from `development` to `main` branch](#4-release-strategy-from-development-to-main-branch)
+    - [2.1.1. Manual `conda` environment installation](#211-manual-conda-environment-installation)
+  - [2.2. Auto-setup script](#22-auto-setup-script)
+  - [2.3. Select the interpreter](#23-select-the-interpreter)
+- [3. Build and run the website locally](#3-build-and-run-the-website-locally)
+- [4. Updating the website](#4-updating-the-website)
 
 ## 2. Development environment setup
 
@@ -21,128 +19,101 @@ The following steps will guide you through the installation procedure.
 
 ### 2.1. Miniconda
 
-[<img style="position: relative; bottom: 3px;" src="https://docs.conda.io/en/latest/_images/conda_logo.svg" alt="Conda" width="80"/>](https://docs.conda.io/en/latest/) is required for creating the development environment (it is suggested to install [Miniconda](https://docs.conda.io/en/latest/miniconda.html)).
+[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Conda_logo.svg/320px-Conda_logo.svg.png" alt="Conda" width="80"/>](https://docs.conda.io/en/latest/) &thinsp; is required for creating the development environment (it is suggested to install [Miniconda](https://docs.conda.io/en/latest/miniconda.html)).
 
-Use the terminal for navigating to the repository base directory.\
-Use the [setup script](#23-setup-the-development-environment-by-using-the-setup-script) to activate the guided installing procedure.
-Otherwise use the following command in your terminal to create an environment named `data-lunch` manually.
+Use the terminal for navigating to the repository base directory, then use the [setup script](#22-auto-setup-script) to activate the installation process.
+
+> [!WARNING]
+> The installation script run several other commands in addition to `conda env create`.  
+> Use it for a proper working environment.  
+> Read below for info about manual environment creation and activation.
+
+> [!TIP]
+> For `conda` to work better with _VS code_, it is suggested to set the `auto_activate_base` option to `False`.
+> 
+> ```
+> conda config --set auto_activate_base False
+> ```
+
+#### 2.1.1. Manual `conda` environment installation
+
+Otherwise use the following command in your terminal to manually create an environment named `settimana-bianca`.
 
 ```
 conda env create -f environment.yml
 ```
 
-Activate the new _Conda_ environment with the following command.
+Activate the new `conda`  environment with the following command.
 
 ```
-conda activate data-lunch
+conda activate settimana-bianca
 ```
 
-### 2.2. Environment variables
+Deactivate the environment with this simple command:
 
-The following environment variables are required for running the _web site_, the _makefile_ or _utility scripts_.
+```
+conda deactivate
+```
 
-#### 2.2.1. General
+### 2.2. Auto-setup script
+Install `settimana-bianca` environment by calling the setup script:
 
-| Variable | Type  | Description                                     |
-| -------- | :---: | ----------------------------------------------- |
-| `VOID`   | _str_ | intentionally void, this table is a placeholder |
+```
+source setup_dev_env.sh
+```
 
-### 2.3. Build and run the website
+It creates the conda environment by using the file `requirements/environment.yml`.  
+These are the steps executed by `setup_dev_env.sh`:
+1. install `ruby` environment
+2. activate development environment
+3. install `ruby` gems
+4. fix `ruby` location with a symlink
 
-Use the makefile to run the website.
+The last step add a symlink to `settimana-bianca` environment (directly in `conda` folders) for `ruby` to find installed _gems_.
 
-Use `make` as shown below.
+### 2.3. Select the interpreter
+If you want _VS Code_ to activate the `conda` environment for you, install the _Python_ extension and the search `select interpreter` from the _command palette_.
+Then select `settimana-bianca` to activate the environment in every _integrated terminal_ you open.
+
+## 3. Build and run the website locally
+
+Use the makefile to run the website locally.
 
 ```
 make jekyll-serve
 ```
 
-## 3. Additional installations before contributing
+This command build the website and spins up a local server.
 
-> This step is not required if the [setup script](#23-setup-the-development-environment-by-using-the-setup-script) is used.
+> [!WARNING]
+> `jekyll serve` (the command used by `make jekyll-serve`) is suitable for development.
+> _Github Pages_ will use a server suitable for a production environment.
 
-Before contributing please create the `ci-cd` environment.
-
-```
-cd requirements
-conda env create -f ci-cd.yml
-```
-
-### 3.1. Pre-commit hooks
-
-> This step is not required if the [setup script](#23-setup-the-development-environment-by-using-the-setup-script) is used.
-
-Then install the precommit hooks.
+If you want to build the website, without running a server, use `make` as shown below.
 
 ```
-conda activate pre-commit
-pre-commit install
-pre-commit autoupdate
+make jekyll-build
 ```
 
-Optionally run hooks on all files.
+## 4. Updating the website
 
-```
-pre-commit run --all-files
-```
+When you are ready to update the website on _Github pages_ you should merge the `development` branch into the `main` branch.
 
-### 3.2. Commitizen
+You have two choices:
 
-> This step is not required if the [setup script](#23-setup-the-development-environment-by-using-the-setup-script) is used.
+1. Using pull requests (_PR)_ from from [_GitHub_ website](https://github.com/rufusxx/settimana_bianca/pulls) (look [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) for more info about _PRs_ ).
+2. Using `git` locally.
 
-The _Commitizen_ hook checks that rules for _conventional commits_ are respected in commits messages.
-Use the following command to enjoy _Commitizen's_ interactive prompt.
+_PR_ are created and merged from _GitHub_ graphical interface, probably an easier approach for `git` newbies.
 
-```
-conda activate ci-cd
-cz commit
-```
-
-`cz c` is a shorther alias for `cz commit`.
-
-## 4. Release strategy from `development` to `main` branch
-
-When you are ready to release to the main branch, use the makefile _bump_, _merge_ and _push_.
-
-First bump the version:
-
-```
-make commitizen-bump
-```
-
-And then _push_ to `remote`:
-
-```
-make commitizen-push
-```
-
-> The makefile takes care of everything.
->
-> If you are curious and you want to know what is done through `make` commands, keep reading.
-
-In order to take advantage of _Commitizen_ `bump` command the following command are executed through `make`.
-
-First checkout on the correct branch.
+If you want to merge manually use the following commands:
 
 ```
 git checkout main
-```
-
-Then start the merge process without using the _fast forward_ strategy (`--no-ff`).
-
-```
 git merge development --no-ff
-```
-
-Now _Commitizen_ `bump` command will add an additional commit with updated versions to every file listed inside `.cz.toml`.
-
-```
-cz bump --no-verify
-```
-
-Then results of the release process are merged back to the `development` branch.
-
-```
+git push
 git checkout development
-git merge main --no-ff
 ```
+
+The last command (`git checkout development`) is strongly suggested: the next time you start coding you are already on the right branch.  
+Otherwise you may start adding commits to `main`, not a real issue, but it is better to add _development_ commits to the branch they belong to.
